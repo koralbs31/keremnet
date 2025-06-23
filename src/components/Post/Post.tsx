@@ -1,23 +1,31 @@
-import React from 'react';
-import './Post.css'
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, Typography, IconButton, Box} from '@mui/material';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import Comments from '../Comments/Comments';
+import PostType from '../../Types/PostType'
 
-interface PostProps {
-    title: string;
-    author: string;
-    date: string;
-    content: string;
-}
+const Post: React.FC<PostType> = ({ title, author, publishedAt, content }) => {
 
-const Post: React.FC<PostProps> = ({ title, author, date, content }) => (
-    <article className="post">
-        <h2 className="post-title">{title}</h2>
-        <div className="post-maker-data">
-            By {author} | {new Date(date).toLocaleDateString()}
-        </div>
-        <div className="post-content">
-            {content}
-        </div>
-    </article>
-);
+    return (
+        <Card sx={{borderRadius: 5, boxShadow: 10}}>
+            <CardHeader
+                title={title}
+                subheader={`${author} | ${new Date(publishedAt).toLocaleDateString()}`}
+            />
+            <CardContent>
+                <Typography variant="body1">
+                    {content}
+                </Typography>
+                <Box display="flex" alignItems="center">
+                    <IconButton >
+                        {<ThumbUpAltIcon />}
+                    </IconButton>
+                </Box>
+
+                <Comments></Comments>
+            </CardContent>
+        </Card>
+    );
+};
 
 export default Post;

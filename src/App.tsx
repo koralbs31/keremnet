@@ -10,7 +10,7 @@ function App() {
         <Post
           title="test Title"
           author="test Name"
-          date="2024-06-10"
+          publishedAt="2024-06-10"
           content="This is the content of the post."
         />
       </header>
