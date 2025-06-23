@@ -2,17 +2,13 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Post from './components/Post/Post';
+import Homepage from './components/Homepage/Homepage';
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Post
-          title="test Title"
-          author="test Name"
-          publishedAt="2024-06-10"
-          content="This is the content of the post."
-        />
+        <Homepage></Homepage>
       </header>
     </div>
   );

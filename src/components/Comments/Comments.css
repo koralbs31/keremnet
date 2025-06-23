@@ -1,4 +1,12 @@
+:root{
+    --primary-color: #A2AADB;
+    --secondary-color: #FFF2E0;
+    --light-color: #C0C9EE;
+    --dark-color: #898AC4;
+}
+
 .comments-container {
+    background-color: var(--light-color);
     border-radius: 8px;
     box-shadow: 0 2px 8px rgb(93, 92, 92);
     padding: 1em;
@@ -22,7 +30,7 @@
 
 .comments-post-btn {
     padding: 8px 16px;
-    background: #2563eb;
+    background: var(--dark-color);
     color: white;
     border: none;
     border-radius: 4px;
@@ -32,7 +40,7 @@
 }
 
 .comments-post-btn:hover {
-    background: #1d4ed8;
+    background: #484968;
 }
 
 .comments-list {

@@ -1,0 +1,79 @@
+:root{
+    --primary-color: #A2AADB;
+    --secondary-color: #FFF2E0;
+    --light-color: #C0C9EE;
+    --dark-color: #898AC4;
+}
+
+.homepage {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--light-color);
+    min-height: 100vh;
+    padding: 0;
+    width: 100vw;
+    overflow: auto;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+}
+.homepage-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2rem 1rem 1.5rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.homepage-title {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.homepage-subtitle {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.95;
+}
+
+.homepage-main {
+    max-width: 900px;
+    margin: 2rem auto 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.homepage-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #4f8cff;
+    padding: 2rem 0;
+}
+
+.homepage-posts {
+    display: contents;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.homepage-post-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.3rem;
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.homepage-post-body {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+}
