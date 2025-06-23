@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, Typography, IconButton, Box} from '@mui/material';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Comments from '../Comments/Comments';
-import PostType from '../../Types/PostType'
+import PostType from '../../Types/Post'
 
 const Post: React.FC<PostType> = ({ title, author, publishedAt, content }) => {
 

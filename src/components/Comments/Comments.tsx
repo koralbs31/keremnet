@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import './Comments.css'
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Comment from '../../Types/Comment';
+import CommentsRender from './CommentsRender/CommentsRender';
 
-interface Comment {
-    id: number;
-    text: string;
+interface Props {
+  items?: Comment[];
 }
 
-const Comments: React.FC = () => {
-    const [comments, setComments] = useState<Comment[]>([]);
+const Comments: React.FC<Props> = ({items}) => {
+    const [comments, setComments] = useState<Comment[]>(items || []);
     const [input, setInput] = useState('');
 
     const handleAddComment = () => {
@@ -22,19 +26,17 @@ const Comments: React.FC = () => {
     return (
         <div className="comments-container">
             <h3 className="comments-title">Comments</h3>
-            <input
-                className="comments-input"
-                type="text"
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                placeholder="Add a comment..."
-            />
-            <button className="comments-post-btn" onClick={handleAddComment}>Post</button>
-            <ul className="comments-list">
-                {comments.map(comment => (
-                    <li className="comments-list-item" key={comment.id}>{comment.text}</li>
-                ))}
-            </ul>
+                <Box
+                component="form"
+                sx={{ '& > :not(style)': { m: 1, width: '25ch' } }}
+                noValidate
+                autoComplete="off"
+                >
+                <TextField id="outlined-basic" label="Comment" variant="outlined" value={input} onChange={e => setInput(e.target.value)}/>
+                </Box>
+            <Button variant="contained" onClick={handleAddComment}>Post</Button>
+
+            <CommentsRender items={comments}></CommentsRender>
         </div>
     );
 };
