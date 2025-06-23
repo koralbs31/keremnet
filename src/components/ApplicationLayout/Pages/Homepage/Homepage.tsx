@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Homepage.css'
-import Post from '../Post/Post';
-import PostType from '../../Types/PostType';
+import Post from '../../../Post/Post';
+import PostType from '../../../../Types/PostType';
 
 const fetchPosts = async (): Promise<PostType[]> => {
     const response = await fetch('http://localhost:3000/posts');
@@ -31,10 +31,6 @@ const Homepage: React.FC = () => {
 
     return (
         <div className="homepage">
-            <header className="homepage-header">
-                <h1 className="homepage-title">KeremNet</h1>
-                <p className="homepage-subtitle">Welcome to the homepage where you can see the posts</p>
-            </header>
             <main className="homepage-main">
                 {loading ? (
                     <div className="homepage-loading">Loading posts...</div>

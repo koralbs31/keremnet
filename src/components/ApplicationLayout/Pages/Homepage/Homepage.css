@@ -8,12 +8,8 @@
 .homepage {
     font-family: 'Segoe UI', Arial, sans-serif;
     background: var(--light-color);
-    min-height: 100vh;
     padding: 0;
-    width: 100vw;
     overflow: auto;
-    height: 100vh;
-    position: fixed;
     top: 0;
     left: 0;
     margin: 0;
