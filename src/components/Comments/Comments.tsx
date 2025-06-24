@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Comment from '../../Types/Comment';
-import CommentsRender from './CommentsRender/CommentsRender';
+import CommentsView from './CommentsView/CommentsView';
 
 interface Props {
   items?: Comment[];
@@ -12,15 +12,16 @@ interface Props {
 
 const Comments: React.FC<Props> = ({items}) => {
     const [comments, setComments] = useState<Comment[]>(items || []);
-    const [input, setInput] = useState('');
+    const [newCommentInput, setNewCommentInput] = useState('');
 
     const handleAddComment = () => {
-        if (input.trim() === '') return;
+        const comment = newCommentInput.trim()
+        if (comment === '') return;
         setComments([
             ...comments,
-            { id: Date.now(), text: input.trim() }
+            { id: Date.now(), text: comment }
         ]);
-        setInput('');
+        setNewCommentInput('');
     };
 
     return (
@@ -32,11 +33,11 @@ const Comments: React.FC<Props> = ({items}) => {
                 noValidate
                 autoComplete="off"
                 >
-                <TextField id="outlined-basic" label="Comment" variant="outlined" value={input} onChange={e => setInput(e.target.value)}/>
+                <TextField id="outlined-basic" label="Comment" variant="outlined" value={newCommentInput} onChange={e => setNewCommentInput(e.target.value)}/>
                 </Box>
             <Button variant="contained" onClick={handleAddComment}>Post</Button>
 
-            <CommentsRender items={comments}></CommentsRender>
+            <CommentsView items={comments}/>
         </div>
     );
 };

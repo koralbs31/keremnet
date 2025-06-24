@@ -22,7 +22,7 @@ const Post: React.FC<PostType> = ({ title, author, publishedAt, content }) => {
                     </IconButton>
                 </Box>
 
-                <Comments></Comments>
+                <Comments/>
             </CardContent>
         </Card>
     );
