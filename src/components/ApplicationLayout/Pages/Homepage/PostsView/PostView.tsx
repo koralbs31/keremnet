@@ -16,8 +16,8 @@ const PostView: React.FC<Props> = ({ Posts, Loading }) => {
                     <div className="homepage-loading">Loading posts...</div>
                 ) : (
                     <ul className="homepage-posts">
-                        {Posts.map((post, idx) => (
-                            <li className="homepage-post" key={post.title + post.publishedAt + idx}>
+                        {Posts.map((post, index) => (
+                            <li className="homepage-post" key={post.title + post.publishedAt + index}>
                                 <Post
                                     title={post.title}
                                     author={post.author}
