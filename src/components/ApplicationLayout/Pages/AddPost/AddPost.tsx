@@ -5,7 +5,7 @@ import './AddPost.css';
 
 const AddPost: React.FC = () => {
   const { formData: post, handleChange, handleSubmit } = useForm(
-    { title: '', content: '' },
+    { author: '', title: '', content: '' },
     (data) => {
       alert(`Post added!\n\nTitle: ${data.title}\nContent: ${data.content}`);
     }
