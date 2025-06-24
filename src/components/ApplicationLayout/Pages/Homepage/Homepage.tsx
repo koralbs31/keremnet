@@ -6,8 +6,7 @@ import PostView from './PostsView/PostView';
 
 const fetchPosts = async (): Promise<PostType[]> => {
     try {
-        const response = await axios.get<PostType[]>('http://localhost:3000/posts');
-        return response.data;
+        return (await axios.get<PostType[]>('http://localhost:8080/api/posts/')).data;
     } catch (error) {
         throw new Error('Failed to fetch posts');
     }
@@ -33,7 +32,7 @@ const Homepage: React.FC = () => {
 
     return (
         <div className="homepage">
-            <PostView Posts={posts} Loading={loading} />
+            <PostView posts={posts} Loading={loading} />
         </div>
     );
 };

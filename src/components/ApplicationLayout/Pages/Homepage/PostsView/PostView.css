@@ -1,11 +1,11 @@
-
+/* about your comment do you like this better than the grid? */
 .homepage-main {
-    max-width: 900px;
-    margin: 2rem auto 0 auto;
-    padding: 0 1rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
 .homepage-loading {

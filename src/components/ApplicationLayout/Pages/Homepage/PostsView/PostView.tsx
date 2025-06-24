@@ -4,11 +4,11 @@ import PostType from '../../../../../Types/Post';
 import Post from '../../../../Post/Post';
 
 interface Props {
-    Posts: PostType[];
+    posts: PostType[];
     Loading?: boolean;
 }
 
-const PostView: React.FC<Props> = ({ Posts, Loading }) => {
+const PostView: React.FC<Props> = ({ posts, Loading }) => {
     return (
         <div className="homepage">
             <main className="homepage-main">
@@ -16,7 +16,7 @@ const PostView: React.FC<Props> = ({ Posts, Loading }) => {
                     <div className="homepage-loading">Loading posts...</div>
                 ) : (
                     <ul className="homepage-posts">
-                        {Posts.map((post, index) => (
+                        {posts.map((post, index) => (
                             <li className="homepage-post" key={post.title + post.publishedAt + index}>
                                 <Post
                                     title={post.title}

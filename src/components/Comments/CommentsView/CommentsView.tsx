@@ -7,7 +7,7 @@ interface Props {
   items: Comment[];
 }
 
-const CommentsRender: React.FC<Props> = ({ items }) => {
+const CommentsView: React.FC<Props> = ({ items }) => {
   return (
       <ul className="comments-list">
         {items.map((item, index) => (
@@ -17,4 +17,4 @@ const CommentsRender: React.FC<Props> = ({ items }) => {
   );
 };
 
-export default CommentsRender;
+export default CommentsView;
