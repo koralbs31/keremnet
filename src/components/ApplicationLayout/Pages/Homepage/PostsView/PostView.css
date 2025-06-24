@@ -1,0 +1,38 @@
+
+.homepage-main {
+    max-width: 900px;
+    margin: 2rem auto 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.homepage-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #4f8cff;
+    padding: 2rem 0;
+}
+
+.homepage-posts {
+    display: contents;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.homepage-post-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.3rem;
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.homepage-post-body {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+}

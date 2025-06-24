@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import './Homepage.css'
-import Post from '../../../Post/Post';
+import './Homepage.css';
 import PostType from '../../../../Types/PostType';
+import axios from 'axios';
+import PostView from './PostsView/PostView';
 
 const fetchPosts = async (): Promise<PostType[]> => {
-    const response = await fetch('http://localhost:3000/posts');
-    if (!response.ok) {
+    try {
+        const response = await axios.get<PostType[]>('http://localhost:3000/posts');
+        return response.data;
+    } catch (error) {
         throw new Error('Failed to fetch posts');
     }
-    return response.json();
 };
 
 const Homepage: React.FC = () => {
@@ -31,24 +33,7 @@ const Homepage: React.FC = () => {
 
     return (
         <div className="homepage">
-            <main className="homepage-main">
-                {loading ? (
-                    <div className="homepage-loading">Loading posts...</div>
-                ) : (
-                    <ul className="homepage-posts">
-                        {posts.map((post, idx) => (
-                            <li className="homepage-post" key={post.title + post.publishedAt + idx}>
-                                <Post
-                                    title={post.title}
-                                    author={post.author}
-                                    publishedAt={post.publishedAt}
-                                    content={post.content}
-                                />
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </main>
+            <PostView Posts={posts} Loading={loading} />
         </div>
     );
 };
