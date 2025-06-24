@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Homepage.css';
-import PostType from '../../../../Types/PostType';
+import PostType from '../../../../Types/Post';
 import axios from 'axios';
 import PostView from './PostsView/PostView';
 

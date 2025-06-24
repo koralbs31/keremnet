@@ -1,6 +1,6 @@
 import React from 'react';
 import './PostView.css';
-import PostType from '../../../../../Types/PostType';
+import PostType from '../../../../../Types/Post';
 import Post from '../../../../Post/Post';
 
 interface Props {

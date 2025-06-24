@@ -1,85 +1,65 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React from 'react';
+import { TextField, Typography, Button, Box } from '@mui/material';
+import { useContactForm } from './useContactForm';
 import './Contact.css';
 
-interface FormData {
-  name: string;
-  email: string;
-  message: string;
-}
-
 const Contact: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    message: '',
-  });
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    alert(`Thanks for your message, ${formData.name}!`);
-    setFormData({ name: '', email: '', message: '' });
-  };
+  const { formData, handleChange, handleSubmit } = useContactForm();
 
   return (
-    <div className='contact-page-wrapper'>
-<div className="contact-page">
-      <div className="contact-info">
-        <h1>Contact Us</h1>
-        <p>
-          We'd love to hear from you! Whether you have a question, feedback, or just want to say hi — drop us a message.
-        </p>
-        <div className="contact-about">
-          <h3>About This App</h3>
-          <p>
-            This app is for course kerem! here we will talk after the course ends and will keep in touch!
-          </p>
-        </div>
-      </div>
+    <div className="contact-page-wrapper">
+      <Box className="contact-page" sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <Box className="contact-info">
+          <Typography variant="h3" component="h1">Contact Us</Typography>
+          <Typography>
+            We'd love to hear from you! Whether you have a question, feedback, or just want to say hi — drop us a message.
+          </Typography>
+          <Box className="contact-about" sx={{ mt: 3 }}>
+            <Typography variant="h5" component="h3">About This App</Typography>
+            <Typography>
+              This app is for course Kerem! Here we will talk after the course ends and will keep in touch!
+            </Typography>
+          </Box>
+        </Box>
 
-      <form className="contact-form" onSubmit={handleSubmit}>
-        <h1>Have any question?</h1>
-        <label htmlFor="name">Name</label>
-        <input
-          id="name"
-          name="name"
-          type="text"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="email">Email</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-
-        <label htmlFor="message">Message</label>
-        <textarea
-          id="message"
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-          required
-        />
-
-        <button type="submit">Send Message</button>
-      </form>
+        <form onSubmit={handleSubmit} className="contact-form">
+          <Typography variant="h4" component="h2">Have any question?</Typography>
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+          />
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Message"
+            name="message"
+            multiline
+            rows={4}
+            value={formData.message}
+            onChange={handleChange}
+            required
+          />
+          <Button variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
+            Send Message
+          </Button>
+        </form>
+      </Box>
     </div>
-    </div>
-    
   );
 };
 

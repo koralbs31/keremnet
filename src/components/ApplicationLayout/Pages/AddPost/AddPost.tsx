@@ -1,4 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
 import './AddPost.css';
 
 interface PostData {
@@ -28,33 +31,39 @@ const AddPost: React.FC = () => {
 
   return (
     <div className='add-post'>
-    <div className="add-post-container">
-      <h2>Add New Post</h2>
-      <form className="add-post-form" onSubmit={handleSubmit}>
-        <label htmlFor="title">Post Title</label>
-        <input
-          id="title"
-          name="title"
-          type="text"
-          value={post.title}
-          onChange={handleChange}
-          required
-        />
+      <div className="add-post-container">
+        <h2>Add New Post</h2>
+        <form className="add-post-form" onSubmit={handleSubmit}>
+          <TextField
+            label="Post Title"
+            id="title"
+            name="title"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            value={post.title}
+            onChange={handleChange}
+            required
+          />
 
-        <label htmlFor="content">Content</label>
-        <textarea
-          id="content"
-          name="content"
-          value={post.content}
-          onChange={handleChange}
-          required
-        />
+          <TextField
+            label="Content"
+            id="content"
+            name="content"
+            margin="normal"
+            multiline
+            rows={2}
+            value={post.content}
+            onChange={handleChange}
+            required
+          />
 
-        <button type="submit">Submit Post</button>
-      </form>
+          <Button variant="contained" color="primary" type="submit">
+            Submit Post
+          </Button>
+        </form>
+      </div>
     </div>
-    </div>
-    
   );
 };
 
