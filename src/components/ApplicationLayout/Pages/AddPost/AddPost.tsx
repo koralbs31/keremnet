@@ -5,6 +5,7 @@ import axios from "axios";
 import AppSnackbar from "../../../../Modals/AppSnackbar"
 import {ROUTES} from '../../../../Routes'
 import "./AddPost.css";
+import { useNavigate } from "react-router-dom";
 
 const AddPost: React.FC = () => {
   const [snackbar, setSnackbar] = useState<{
@@ -19,12 +20,15 @@ const AddPost: React.FC = () => {
       try {
         await axios.post(ROUTES.addPost, data);
         setSnackbar({ open: true, message: "Post submitted successfully!", severity: "success" });
+        navigate('/')
       } catch (error) {
         console.error(error);
         setSnackbar({ open: true, message: "Failed to submit post.", severity: "error" });
       }
     }
   );
+
+  let navigate = useNavigate();
 
   return (
     <div className="add-post">

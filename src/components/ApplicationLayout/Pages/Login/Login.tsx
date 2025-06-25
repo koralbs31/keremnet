@@ -1,18 +1,11 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  CssBaseline,
-  Divider,
-  FormControl,
-  FormLabel,
-  Stack,
-  TextField,
-  Typography,
-  Card as MuiCard,
-} from '@mui/material';
+import { useState } from 'react';
+import axios from 'axios';
+import { Box, Button, CssBaseline, FormControl, FormLabel, Stack, TextField, Typography, Card as MuiCard } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { useForm } from '../../../../hooks/useForm'; 
+import { useForm } from '../../../../hooks/useForm';
+import { ROUTES } from '../../../../Routes';
+import { User } from '../../../../App';
+import { useNavigate } from 'react-router-dom';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -25,57 +18,53 @@ const Card = styled(MuiCard)(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     maxWidth: '450px',
   },
-  boxShadow:
-    '0px 5px 15px rgba(0, 0, 0, 0.05), 0px 15px 35px -5px rgba(0, 0, 0, 0.05)',
 }));
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
   minHeight: '100vh',
   padding: theme.spacing(2),
-  background:
-    'radial-gradient(ellipse at center, #f3f6f9 0%, #ffffff 100%)',
+  background: 'radial-gradient(ellipse at center, #f3f6f9 0%, #ffffff 100%)',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 }));
 
+interface Props {
+  onLogin: (user: User) => void;
+}
+
 interface FormFields {
   email: string;
   password: string;
-  [key: string]: string; 
+  [key: string]: string;
 }
 
-export default function Login() {
+
+const Login: React.FC<Props> = ({ onLogin }) => {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
+  let navigate = useNavigate();
+
   const { formData, handleChange, handleSubmit } = useForm<FormFields>(
     { email: '', password: '' },
-    (data) => {
-      const isValid = validateInputs(data);
-      if (!isValid) return;
+    async (data) => {
+      if (!validateInputs(data)) return;
 
-      console.log('Form submitted:', data);
+      try {
+        const res = await axios.post(`${ROUTES.users}/login`, data);
+        onLogin(res.data.user);
+        navigate("/")
+      } catch (err) {
+        console.error('Login failed:', err);
+      }
     }
   );
 
   const validateInputs = (data: FormFields) => {
     let isValid = true;
-
-    if (!data.email || !/\S+@\S+\.\S+/.test(data.email)) {
-      setEmailError('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError('');
-    }
-
-    if (!data.password || data.password.length < 6) {
-      setPasswordError('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError('');
-    }
-
+    if (!/\S+@\S+\.\S+/.test(data.email)) { setEmailError('Invalid email'); isValid = false; } else setEmailError('');
+    if (data.password.length < 6) { setPasswordError('Password too short'); isValid = false; } else setPasswordError('');
     return isValid;
   };
 
@@ -84,62 +73,22 @@ export default function Login() {
       <CssBaseline />
       <SignInContainer>
         <Card variant="outlined">
-          <Typography
-            component="h1"
-            variant="h4"
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
-          >
-            Sign in
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ display: 'flex', flexDirection: 'column', width: '100%', gap: 2 }}
-          >
+          <Typography component="h1" variant="h4">Sign in</Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ gap: 2, display: 'flex', flexDirection: 'column' }}>
             <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
-              <TextField
-                id="email"
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="your@email.com"
-                autoComplete="email"
-                autoFocus
-                required
-                fullWidth
-                variant="outlined"
-                error={Boolean(emailError)}
-                helperText={emailError}
-              />
+              <FormLabel>Email</FormLabel>
+              <TextField name="email" value={formData.email} onChange={handleChange} error={!!emailError} helperText={emailError} />
             </FormControl>
-
             <FormControl>
-              <FormLabel htmlFor="password">Password</FormLabel>
-              <TextField
-                id="password"
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="••••••"
-                autoComplete="current-password"
-                required
-                fullWidth
-                variant="outlined"
-                error={Boolean(passwordError)}
-                helperText={passwordError}
-              />
+              <FormLabel>Password</FormLabel>
+              <TextField type="password" name="password" value={formData.password} onChange={handleChange} error={!!passwordError} helperText={passwordError} />
             </FormControl>
-
-            <Button type="submit" fullWidth variant="contained">
-              Sign in
-            </Button>
+            <Button type="submit" fullWidth variant="contained">Sign in</Button>
           </Box>
         </Card>
       </SignInContainer>
     </>
   );
-}
+};
+
+export default Login;
