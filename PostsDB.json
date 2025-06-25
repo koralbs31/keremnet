@@ -1,0 +1,34 @@
+{
+    "posts": [
+        {
+            "title": "first post",
+            "author": "Admin",
+            "publishedAt": "2024-06-01",
+            "content": "This is the first post."
+        },
+        {
+            "title": "second post",
+            "author": "koral steinberg",
+            "publishedAt": "2025-06-02",
+            "content": "first hanich post."
+        },
+        {
+            "title": "third post",
+            "author": "Ran",
+            "publishedAt": "2025-06-03",
+            "content": "Second hanich post"
+        },
+        {
+            "title": "forth post",
+            "author": "Eden",
+            "publishedAt": "2025-06-08",
+            "content": "third hanich post"
+        },
+        {
+            "title": "forth post",
+            "author": "Eden",
+            "publishedAt": "2025-06-08",
+            "content": "third hanich post"
+        }
+    ]
+}

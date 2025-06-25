@@ -1,0 +1,37 @@
+:root{
+    --primary-color: #A2AADB;
+    --secondary-color: #FFF2E0;
+    --light-color: #C0C9EE;
+    --dark-color: #898AC4;
+}
+
+.homepage {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--light-color);
+    padding: 0;
+    overflow: auto;
+    top: 0;
+    left: 0;
+    margin: 0;
+}
+.homepage-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 2rem 1rem 1.5rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.homepage-title {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.homepage-subtitle {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.2rem;
+    font-weight: 400;
+    opacity: 0.95;
+}
