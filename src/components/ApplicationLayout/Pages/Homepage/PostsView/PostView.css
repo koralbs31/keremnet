@@ -1,0 +1,38 @@
+/* about your comment do you like this better than the grid? */
+.homepage-main {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.homepage-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 1.1rem;
+    color: #4f8cff;
+    padding: 2rem 0;
+}
+
+.homepage-posts {
+    display: contents;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.homepage-post-title {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.3rem;
+    color: var(--dark-color);
+    font-weight: 600;
+}
+
+.homepage-post-body {
+    margin: 0;
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.6;
+}
