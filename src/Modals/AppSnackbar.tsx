@@ -1,10 +1,10 @@
 import React from "react";
-import { Snackbar, Alert } from "@mui/material";
+import { Snackbar, Alert, AlertColor } from "@mui/material";
 
 interface AppSnackbarProps {
   open: boolean;
   message: string;
-  severity: "success" | "error" | "info" | "warning";
+  severity: AlertColor;
   onClose: () => void;
   duration?: number;
 }

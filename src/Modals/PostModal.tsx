@@ -29,13 +29,13 @@ const PostModal: React.FC<Props> = ({ onClose, post }) => (
         outline: "none",
       }}
     >
-      <Typography id="modal-title" variant="h6" mb={2}>
+      <Typography id="modal-title" variant="h6"mb={1}>
         {post.title}
       </Typography>
       <Typography variant="body2" mb={1}>
         Author: {post.author}
       </Typography>
-      <Typography variant="body2" mb={2}>
+      <Typography variant="body2" mb={1}>
         Date: {post.publishedAt}
       </Typography>
       <Typography variant="body1" mb={3}>
