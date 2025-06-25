@@ -3,10 +3,12 @@ import './Homepage.css';
 import PostType from '../../../../Types/Post';
 import axios from 'axios';
 import PostView from './PostsView/PostView';
+import {ROUTES} from '../../../../Routes'
+
 
 const fetchPosts = async (): Promise<PostType[]> => {
     try {
-        return (await axios.get<PostType[]>('http://localhost:8080/api/posts/')).data;
+        return (await axios.get<PostType[]>(ROUTES.posts)).data;
     } catch (error) {
         throw new Error('Failed to fetch posts');
     }

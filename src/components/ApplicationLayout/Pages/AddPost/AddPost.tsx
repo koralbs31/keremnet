@@ -1,19 +1,27 @@
-import React from 'react';
-import { TextField, Button } from '@mui/material';
-import { useForm } from '../../../../hooks/useForm';
-import axios from 'axios';
-import './AddPost.css';
+import React, { useState } from "react";
+import { TextField, Button } from "@mui/material";
+import { useForm } from "../../../../hooks/useForm";
+import axios from "axios";
+import AppSnackbar from "../../../../Modals/AppSnackbar"
+import {ROUTES} from '../../../../Routes'
+import "./AddPost.css";
 
 const AddPost: React.FC = () => {
+  const [snackbar, setSnackbar] = useState<{
+    open: boolean;
+    message: string;
+    severity: "success" | "error";
+  }>({ open: false, message: "", severity: "success" });
+
   const { formData: post, handleChange, handleSubmit } = useForm(
-    { author: '', title: '', content: '' },
+    { author: "", title: "", content: "" },
     async (data) => {
       try {
-        await axios.post('http://localhost:8080/api/posts/add', data);
-        alert(`Post added!`);
+        await axios.post(ROUTES.addPost, data);
+        setSnackbar({ open: true, message: "Post submitted successfully!", severity: "success" });
       } catch (error) {
         console.error(error);
-        alert('Something went wrong while adding the post.');
+        setSnackbar({ open: true, message: "Failed to submit post.", severity: "error" });
       }
     }
   );
@@ -59,6 +67,13 @@ const AddPost: React.FC = () => {
           </Button>
         </form>
       </div>
+
+      <AppSnackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
+      />
     </div>
   );
 };

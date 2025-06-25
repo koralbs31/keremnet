@@ -4,6 +4,7 @@ import PostType from '../../../../../Types/Post';
 import Post from '../../../../Post/Post';
 import PostModal from '../../../../../Modals/PostModal';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 
 interface Props {
   posts: PostType[];
@@ -19,17 +20,26 @@ const PostView: React.FC<Props> = ({ posts, Loading }) => {
     setModalOpen(true);
   };
 
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedPost(null);
+  };
+
   return (
     <div className="homepage">
       <main className="homepage-main">
         {Loading ? (
-          <div className="homepage-loading">Loading posts...</div>
+          <div className="homepage-loading">
+            <CircularProgress />
+          </div>
         ) : (
           <ul className="homepage-posts">
             {posts.map((post, index) => (
               <li className="homepage-post" key={post.title + post.publishedAt + index}>
                 <Post {...post} />
-                <Button variant="contained" onClick={() => handleViewPost(post)}>View Post</Button>
+                <Button variant="contained" onClick={() => handleViewPost(post)}>
+                  View Post
+                </Button>
               </li>
             ))}
           </ul>
@@ -37,7 +47,7 @@ const PostView: React.FC<Props> = ({ posts, Loading }) => {
       </main>
 
       {modalOpen && selectedPost && (
-        <PostModal setOpenModal={setModalOpen} post={selectedPost} />
+        <PostModal onClose={handleCloseModal} post={selectedPost} />
       )}
     </div>
   );
