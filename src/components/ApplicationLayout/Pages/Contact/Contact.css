@@ -1,91 +1,41 @@
-:root{
-    --primary-color: #A2AADB;
-    --secondary-color: #FFF2E0;
-    --light-color: #C0C9EE;
-    --dark-color: #898AC4;
+:root {
+  --primary-color: #A2AADB;
+  --secondary-color: #FFF2E0;
+  --light-color: #C0C9EE;
+  --dark-color: #898AC4;
 }
 
-.contact-page-wrapper{
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: var(--light-color);
-    overflow: auto;
+.contact-page-wrapper {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: var(--light-color);
+  min-height: 100vh;
+  padding: 2rem 1rem;
 }
 
 .contact-page {
-  background-color: var(--light-color);
   max-width: 900px;
-  margin: 40px auto;
-  padding: 30px;
+  margin: auto;
   display: flex;
   flex-direction: column;
   gap: 40px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
 }
 
 .contact-info {
-  background: #f1f5f9;
-  padding: 20px;
-  border-radius: 10px;
-}
-
-.contact-info h1 {
-  margin-bottom: 10px;
+  background: #f9fafb;
+  padding: 30px;
+  border-radius: 12px;
 }
 
 .contact-about {
   margin-top: 20px;
-  padding-top: 10px;
-  border-top: 1px solid #ccc;
 }
 
 .contact-form {
-  background: white;
-  padding: 25px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
+  padding: 30px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-}
-
-.contact-form label {
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-
-.contact-form input,
-.contact-form textarea {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.contact-form input:focus,
-.contact-form textarea:focus {
-  border-color: #0077cc;
-}
-
-.contact-form textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.contact-form button {
-  margin-top: 10px;
-  padding: 12px 20px;
-  background-color: #0077cc;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.contact-form button:hover {
-  background-color: #005fa3;
+  gap: 20px;
+  background-color: white;
 }

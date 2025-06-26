@@ -1,43 +1,90 @@
-:root{
-    --primary-color: #A2AADB;
-    --secondary-color: #FFF2E0;
-    --light-color: #C0C9EE;
-    --dark-color: #898AC4;
+:root {
+  --primary-color: #000000;
+  --secondary-color: #282828;
+  --light-color: #230046;
+  --dark-color: #320064;
+
+  --comment-background: #73B9EE;
+  --comment-title: #ffffff;
+  --comment-button-bg: #ffffff;
+  --comment-button-color: #320064;
+  --comment-button-hover-bg: grey;
+
+  --homepage-primary: #a2aadb;
+  --homepage-secondary: #fff2e0;
+  --homepage-light: #c0c9ee;
+  --homepage-dark: #898ac4;
+
+  --comments-list-item-border: #e5e7eb;
+  --comments-list-item-text: #333;
 }
 
 .comments-container {
-    border-radius: 0.5rem;
-    box-shadow: 0 0.125rem 0.5rem rgb(93, 92, 92);
-    padding: 1em;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  background-color: var(--comment-background);
+  margin-top: 1.5rem;
 }
 
 .comments-title {
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
-    color: #222;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--comment-title);
 }
 
-.comments-input {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    margin-bottom: 0.5rem;
-    border: 1px solid #d1d5db;
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    box-sizing: border-box;
+.comments-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .comments-post-btn {
-    padding: 0.5rem 1rem;
-    background: #2563eb;
-    color: white;
-    border: none;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    margin-bottom: 1rem;
-    font-size: 1rem;
+  align-self: flex-start;
+  text-transform: none;
 }
 
-.comments-post-btn:hover {
-    background: #1d4ed8;
+.comments-list-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--comments-list-item-border);
+  color: var(--comments-list-item-text);
+  font-size: 1rem;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: var(--homepage-light);
+}
+
+.homepage {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  background-color: var(--homepage-light);
+  overflow-y: auto;
+}
+
+.homepage-header {
+  background-color: var(--homepage-primary);
+  color: white;
+  padding: 2rem 1rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.homepage-title {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.homepage-subtitle {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  opacity: 0.95;
 }

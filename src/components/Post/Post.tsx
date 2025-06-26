@@ -1,31 +1,47 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, Typography, IconButton, Box} from '@mui/material';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  IconButton,
+  Box,
+} from '@mui/material';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import Comments from '../Comments/Comments';
-import PostType from '../../Types/Post'
+import PostType from '../../Types/Post';
+import { User } from '../../App';
 
-const Post: React.FC<PostType> = ({ title, author, publishedAt, content }) => {
+interface PostProps {
+  post: PostType;
+  user: User | null;
+}
 
-    return (
-        <Card sx={{borderRadius: 5, boxShadow: 10}}>
-            <CardHeader
-                title={title}
-                subheader={`${author} | ${new Date(publishedAt).toLocaleDateString()}`}
-            />
-            <CardContent>
-                <Typography variant="body1">
-                    {content}
-                </Typography>
-                <Box display="flex" alignItems="center">
-                    <IconButton >
-                        {<ThumbUpAltIcon />}
-                    </IconButton>
-                </Box>
+const Post: React.FC<PostProps> = ({ post, user }) => {
+  const formattedDate = new Date(post.publishedAt).toLocaleDateString();
 
-                <Comments/>
-            </CardContent>
-        </Card>
-    );
+  return (
+    <Card sx={{ borderRadius: 5, boxShadow: 10, mb: 3 }}>
+      <CardHeader
+        title={post.title}
+        subheader={`${post.user?.username || 'Unknown Author'} | ${formattedDate}`}
+      />
+
+      <CardContent>
+        <Typography variant="body1" >
+          {post.content}
+        </Typography>
+
+        <Box display="flex" alignItems="center" mb={2}>
+          <IconButton>
+            <ThumbUpAltIcon />
+          </IconButton>
+        </Box>
+
+        <Comments user={user} />
+      </CardContent>
+    </Card>
+  );
 };
 
 export default Post;

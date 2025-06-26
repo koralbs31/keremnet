@@ -5,13 +5,15 @@ import Post from '../../../../Post/Post';
 import PostModal from '../../../../../Modals/PostModal';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import { User } from '../../../../../App';
 
 interface Props {
   posts: PostType[];
+  user: User | null;
   Loading?: boolean;
 }
 
-const PostView: React.FC<Props> = ({ posts, Loading }) => {
+const PostView: React.FC<Props> = ({ posts, user, Loading }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<PostType | null>(null);
 
@@ -35,8 +37,8 @@ const PostView: React.FC<Props> = ({ posts, Loading }) => {
         ) : (
           <ul className="homepage-posts">
             {posts.map((post, index) => (
-              <li className="homepage-post" key={post.title + post.publishedAt + index}>
-                <Post {...post} />
+              <li className="homepage-post" key={post.id || index}>
+                <Post post={post} user={user} />
                 <Button variant="contained" onClick={() => handleViewPost(post)}>
                   View Post
                 </Button>

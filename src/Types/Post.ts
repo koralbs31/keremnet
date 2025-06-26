@@ -1,8 +1,13 @@
-interface Post {
-    title: string;
-    author: string;
-    publishedAt: string; //2024-06-10T12:34:56Z
-    content: string;
+export interface User {
+  id?: string;
+  username: string;
+  email?: string;
 }
 
-export default Post
+export default interface Post {
+  id: string;
+  title: string;
+  content: string;
+  publishedAt: string;
+  user: User; 
+}

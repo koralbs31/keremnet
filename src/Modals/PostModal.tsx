@@ -33,7 +33,7 @@ const PostModal: React.FC<Props> = ({ onClose, post }) => (
         {post.title}
       </Typography>
       <Typography variant="body2" mb={1}>
-        Author: {post.author}
+        Author: {post.user.username}
       </Typography>
       <Typography variant="body2" mb={1}>
         Date: {post.publishedAt}

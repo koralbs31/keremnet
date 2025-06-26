@@ -1,19 +1,17 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
+import { useState } from 'react';
 
 export function useForm<T extends Record<string, string>>(
   initialState: T,
-  onSubmitCallback?: (formData: T) => void
+  onSubmit?: (formData: T) => void
 ) {
-  const [formData, setFormData] = useState<T>(initialState);
+  const [formData, setFormData] = useState(initialState);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (onSubmitCallback) onSubmitCallback(formData);
+    onSubmit?.(formData);
     setFormData(initialState);
   };
 

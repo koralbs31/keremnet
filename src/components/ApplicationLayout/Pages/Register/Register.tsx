@@ -1,108 +1,125 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  CssBaseline,
-  FormControl,
-  FormLabel,
-  Stack,
-  TextField,
-  Typography,
-  Card as MuiCard,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useForm } from '../../../../hooks/useForm'; 
 import axios from 'axios';
-import {ROUTES} from '../../../../Routes'
+import AuthForm from '../../../../hooks/AuthForm';
 import { User } from '../../../../App';
 import { useNavigate } from 'react-router-dom';
-
-const Card = styled(MuiCard)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignSelf: 'center',
-  width: '100%',
-  padding: theme.spacing(4),
-  gap: theme.spacing(2),
-  margin: 'auto',
-  [theme.breakpoints.up('sm')]: {
-    maxWidth: '450px',
-  },
-  boxShadow:
-    '0px 5px 15px rgba(0, 0, 0, 0.05), 0px 15px 35px -5px rgba(0, 0, 0, 0.05)',
-}));
-
-const RegisterContainer = styled(Stack)(({ theme }) => ({
-  minHeight: '100vh',
-  padding: theme.spacing(2),
-  background:
-    'radial-gradient(ellipse at center, #f3f6f9 0%, #ffffff 100%)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
+import { ROUTES } from '../../../../Routes';
+import { Button, Typography, Box } from '@mui/material';
+import AppSnackbar from '../../../../Modals/AppSnackbar';
 
 interface Props {
   onRegister: (user: User) => void;
 }
 
-interface FormFields {
-  username: string;
-  email: string;
-  password: string;
-  [key: string]: string; 
-}
-
 const Register: React.FC<Props> = ({ onRegister }) => {
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  let navigate = useNavigate();
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: '',
+    severity: 'success' as 'success' | 'error',
+  });
+  const navigate = useNavigate();
 
-  const { formData, handleChange, handleSubmit } = useForm<FormFields>(
-    { username: '', email: '', password: '' },
-    async (data) => {
-      if (!validateInputs(data)) return;
+  const fields = [
+    { name: 'username', label: 'Username' },
+    { name: 'email', label: 'Email' },
+    { name: 'password', label: 'Password', type: 'password' },
+  ];
 
-      try {
-        const res = await axios.post(`${ROUTES.users}/register`, data);
+  const validate = (data: Record<string, string>) => {
+    const errors: Record<string, string> = {};
+    if (!data.username.trim()) errors.username = 'Username required';
+    if (!/\S+@\S+\.\S+/.test(data.email)) errors.email = 'Invalid email';
+    if (data.password.length < 6) errors.password = 'Password too short';
+    return errors;
+  };
+
+  const onSubmit = async (data: Record<string, string>) => {
+    try {
+      const formData = new FormData();
+      formData.append('username', data.username);
+      formData.append('email', data.email);
+      formData.append('password', data.password);
+      if (imageFile) formData.append('image', imageFile);
+
+      const res = await axios.post(`${ROUTES.users}/register`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
+      setSnackbar({
+        open: true,
+        message: 'Registered successfully!',
+        severity: 'success',
+      });
+
+      setTimeout(() => {
         onRegister(res.data.user);
-        navigate("/")
-      } catch (err) {
-        console.error('Register failed:', err);
-      }
+        navigate('/');
+      }, 1000);
+    } catch {
+      setSnackbar({
+        open: true,
+        message: 'Register failed',
+        severity: 'error',
+      });
     }
-  );
-
-  const validateInputs = (data: FormFields) => {
-    let isValid = true;
-    if (!/\S+@\S+\.\S+/.test(data.email)) { setEmailError('Invalid email'); isValid = false; } else setEmailError('');
-    if (data.password.length < 6) { setPasswordError('Password too short'); isValid = false; } else setPasswordError('');
-    return isValid;
   };
 
   return (
     <>
-      <CssBaseline />
-      <RegisterContainer>
-        <Card variant="outlined">
-          <Typography component="h1" variant="h4">Register</Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ gap: 2, display: 'flex', flexDirection: 'column' }}>
-            <FormControl>
-              <FormLabel>Username</FormLabel>
-              <TextField name="username" value={formData.username} onChange={handleChange} />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Email</FormLabel>
-              <TextField name="email" value={formData.email} onChange={handleChange} error={!!emailError} helperText={emailError} />
-            </FormControl>
-            <FormControl>
-              <FormLabel>Password</FormLabel>
-              <TextField type="password" name="password" value={formData.password} onChange={handleChange} error={!!passwordError} helperText={passwordError} />
-            </FormControl>
-            <Button type="submit" fullWidth variant="contained">Register</Button>
-          </Box>
-        </Card>
-      </RegisterContainer>
+      <AuthForm
+        title="Register"
+        fields={fields}
+        validate={validate}
+        onSubmit={onSubmit}
+        submitLabel="Register"
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 2,
+            mt: 2,
+            maxWidth: 400,
+            width: '100%',
+          }}
+        >
+          <input
+            accept="image/*"
+            id="profile-image-upload"
+            type="file"
+            style={{ display: 'none' }}
+            onChange={e => {
+              if (e.target.files && e.target.files[0]) {
+                setImageFile(e.target.files[0]);
+              }
+            }}
+          />
+          <label htmlFor="profile-image-upload">
+            <Button variant="outlined" component="span">
+              Choose Profile Image
+            </Button>
+          </label>
+          <Typography
+            variant="body2"
+            sx={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              flexGrow: 1,
+            }}
+          >
+            {imageFile ? imageFile.name : 'No file chosen'}
+          </Typography>
+        </Box>
+      </AuthForm>
+
+      <AppSnackbar
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        onClose={() => setSnackbar(prev => ({ ...prev, open: false }))}
+      />
     </>
   );
 };

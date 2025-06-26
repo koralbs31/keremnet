@@ -1,83 +1,96 @@
-import React, { useState } from "react";
-import { TextField, Button } from "@mui/material";
-import { useForm } from "../../../../hooks/useForm";
+import React, { useState, useEffect } from "react";
+import {
+  TextField,
+  Button,
+  Typography,
+  Paper,
+  Box,
+} from "@mui/material";
 import axios from "axios";
-import AppSnackbar from "../../../../Modals/AppSnackbar"
-import {ROUTES} from '../../../../Routes'
-import "./AddPost.css";
+import { ROUTES } from "../../../../Routes";
 import { useNavigate } from "react-router-dom";
+import { User } from "../../../../App";
+import { useSnackbar } from "../../../../Modals/SnackbarContext"; 
+import "./AddPost.css";
 
-const AddPost: React.FC = () => {
-  const [snackbar, setSnackbar] = useState<{
-    open: boolean;
-    message: string;
-    severity: "success" | "error";
-  }>({ open: false, message: "", severity: "success" });
+interface AddPostProps {
+  user: User | null;
+}
 
-  const { formData: post, handleChange, handleSubmit } = useForm(
-    { author: "", title: "", content: "" },
-    async (data) => {
-      try {
-        await axios.post(ROUTES.addPost, data);
-        setSnackbar({ open: true, message: "Post submitted successfully!", severity: "success" });
-        navigate('/')
-      } catch (error) {
-        console.error(error);
-        setSnackbar({ open: true, message: "Failed to submit post.", severity: "error" });
-      }
+const AddPost: React.FC<AddPostProps> = ({ user }) => {
+  const navigate = useNavigate();
+  const { showSnackbar } = useSnackbar(); 
+
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    if (!user) navigate("/login");
+  }, [user, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+
+    try {
+      await axios.post(ROUTES.addPost, {
+        title,
+        content,
+        author: user.username,
+      });
+      showSnackbar("Post submitted successfully!", "success");
+      setTimeout(() => navigate("/"), 1000);
+    } catch (error) {
+      console.error(error);
+      showSnackbar("Failed to submit post.", "error");
     }
-  );
-
-  let navigate = useNavigate();
+  };
 
   return (
     <div className="add-post">
-      <div className="add-post-container">
-        <h2>Add New Post</h2>
-        <form className="add-post-form" onSubmit={handleSubmit}>
-          <TextField
-            label="Author"
-            name="author"
-            variant="outlined"
-            fullWidth
-            margin="normal"
-            value={post.author}
-            onChange={handleChange}
-            required
-          />
+      <Paper elevation={4} className="add-post-container">
+        <Typography variant="h4" gutterBottom>
+          Add New Post
+        </Typography>
+
+        <Box
+          component="form"
+          className="add-post-form"
+          onSubmit={handleSubmit}
+          noValidate
+        >
           <TextField
             label="Post Title"
             name="title"
             variant="outlined"
             fullWidth
-            margin="normal"
-            value={post.title}
-            onChange={handleChange}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
+
           <TextField
             label="Content"
             name="content"
-            margin="normal"
+            variant="outlined"
             multiline
-            rows={4}
+            rows={6}
             fullWidth
-            value={post.content}
-            onChange={handleChange}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
             required
           />
-          <Button variant="contained" color="primary" type="submit">
+
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            sx={{ mt: 2, alignSelf: "flex-start" }}
+          >
             Submit Post
           </Button>
-        </form>
-      </div>
-
-      <AppSnackbar
-        open={snackbar.open}
-        message={snackbar.message}
-        severity={snackbar.severity}
-        onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
-      />
+        </Box>
+      </Paper>
     </div>
   );
 };

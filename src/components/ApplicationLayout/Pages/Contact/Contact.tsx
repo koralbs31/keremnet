@@ -1,10 +1,23 @@
 import React from 'react';
-import { TextField, Typography, Button, Box } from '@mui/material';
+import {
+  TextField,
+  Typography,
+  Button,
+  Box,
+  Divider,
+  Paper,
+} from '@mui/material';
 import { useForm } from '../../../../hooks/useForm';
 import './Contact.css';
 
+interface ContactFormData extends Record<string, string> {
+  name: string;
+  email: string;
+  message: string;
+}
+
 const Contact: React.FC = () => {
-  const { formData, handleChange, handleSubmit } = useForm(
+  const { formData, handleChange, handleSubmit } = useForm<ContactFormData>(
     { name: '', email: '', message: '' },
     (data) => {
       alert(`Thanks ${data.name}, your message has been sent!`);
@@ -13,26 +26,34 @@ const Contact: React.FC = () => {
 
   return (
     <div className="contact-page-wrapper">
-      <Box className="contact-page" sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        <Box className="contact-info">
-          <Typography variant="h3">Contact Us</Typography>
-          <Typography>
+      <Box className="contact-page">
+        <Paper elevation={3} className="contact-info">
+          <Typography variant="h3" gutterBottom>
+            Contact Us
+          </Typography>
+          <Typography variant="body1">
             We'd love to hear from you! Whether you have a question, feedback, or just want to say hi — drop us a message.
           </Typography>
-          <Box className="contact-about" sx={{ mt: 3 }}>
-            <Typography variant="h5">About This App</Typography>
-            <Typography>
-              This app is for course Kerem! Here we will talk after the course ends and will keep in touch!
+
+          <Divider sx={{ my: 3 }} />
+
+          <Box className="contact-about">
+            <Typography variant="h5" gutterBottom>
+              About This App
+            </Typography>
+            <Typography variant="body2">
+              This app is for course Kerem! Here we will talk after the course ends and keep in touch!
             </Typography>
           </Box>
-        </Box>
+        </Paper>
 
-        <form onSubmit={handleSubmit} className="contact-form">
-          <Typography variant="h4">Have any question?</Typography>
+        <Paper elevation={3} component="form" onSubmit={handleSubmit} className="contact-form">
+          <Typography variant="h4" gutterBottom>
+            Have any questions?
+          </Typography>
 
           <TextField
             fullWidth
-            margin="normal"
             label="Name"
             name="name"
             value={formData.name}
@@ -42,7 +63,6 @@ const Contact: React.FC = () => {
 
           <TextField
             fullWidth
-            margin="normal"
             label="Email"
             type="email"
             name="email"
@@ -53,7 +73,6 @@ const Contact: React.FC = () => {
 
           <TextField
             fullWidth
-            margin="normal"
             label="Message"
             name="message"
             multiline
@@ -63,10 +82,15 @@ const Contact: React.FC = () => {
             required
           />
 
-          <Button variant="contained" color="primary" type="submit" sx={{ mt: 2 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+            sx={{ alignSelf: 'flex-start', mt: 2 }}
+          >
             Send Message
           </Button>
-        </form>
+        </Paper>
       </Box>
     </div>
   );
