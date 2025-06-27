@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Avatar, Typography, Box } from "@mui/material";
+import { Card, Avatar, Typography } from "@mui/material";
 
 interface ProfileCardProps {
   avatarUrl: string;
