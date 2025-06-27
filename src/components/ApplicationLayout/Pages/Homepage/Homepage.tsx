@@ -11,50 +11,46 @@ interface HomepageProps {
   user: User | null;
 }
 
-const fetchPosts = async (): Promise<PostType[]> => {
-  const res = await axios.get<PostType[]>(ROUTES.posts);
-  return res.data;
-};
-
 const Homepage: React.FC<HomepageProps> = ({ user }) => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [loading, setLoading] = useState(true);
-  const { showSnackbar } = useSnackbar(); 
+  const { showSnackbar } = useSnackbar();
+
+  const fetchPosts = async () => {
+    if (!user) return;
+    setLoading(true);
+    try {
+      const res = await axios.get<PostType[]>(ROUTES.posts);
+      setPosts(res.data);
+    } catch (error) {
+      console.error(error);
+      showSnackbar("Failed to fetch posts", "error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (!user) {
-      setLoading(false);
-      return;
-    }
-
-    const loadPosts = async () => {
-      try {
-        const data = await fetchPosts();
-        setPosts(data);
-      } catch (error) {
-        console.error(error);
-        showSnackbar("Failed to fetch posts", "error");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPosts();
-  }, [user, showSnackbar]);
+    fetchPosts();
+  }, [user]);
 
   if (!user) {
     return (
       <div className="not-logged-in">
         <h1>Please log in to view posts.</h1>
         <p>Sorry but this site is reserved for kerem students only.</p>
-        <p>Zeus, Methoda, Gefen please go away.</p>
       </div>
     );
   }
 
   return (
     <div className="homepage">
-      <PostView posts={posts} user={user} Loading={loading} />
+      <PostView
+        posts={posts}
+        user={user}
+        loading={loading}  
+        refreshPosts={fetchPosts} 
+      />
     </div>
   );
 };

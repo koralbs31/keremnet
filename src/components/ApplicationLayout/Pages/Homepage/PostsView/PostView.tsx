@@ -10,10 +10,11 @@ import { User } from '../../../../../App';
 interface Props {
   posts: PostType[];
   user: User | null;
-  Loading?: boolean;
+  loading?: boolean;
+  refreshPosts: () => void;
 }
 
-const PostView: React.FC<Props> = ({ posts, user, Loading }) => {
+const PostView: React.FC<Props> = ({ posts, user, loading, refreshPosts }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<PostType | null>(null);
 
@@ -25,12 +26,13 @@ const PostView: React.FC<Props> = ({ posts, user, Loading }) => {
   const handleCloseModal = () => {
     setModalOpen(false);
     setSelectedPost(null);
+    refreshPosts();  
   };
 
   return (
     <div className="homepage">
       <main className="homepage-main">
-        {Loading ? (
+        {loading ? (
           <div className="homepage-loading">
             <CircularProgress />
           </div>
@@ -38,7 +40,7 @@ const PostView: React.FC<Props> = ({ posts, user, Loading }) => {
           <ul className="homepage-posts">
             {posts.map((post, index) => (
               <li className="homepage-post" key={post.id || index}>
-                <Post post={post} user={user} />
+                <Post post={post} user={user} onPostUpdated={refreshPosts} />
                 <Button variant="contained" onClick={() => handleViewPost(post)}>
                   View Post
                 </Button>

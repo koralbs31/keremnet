@@ -1,10 +1,10 @@
 import React from 'react';
 import './CommentsView.css';
 
-import Comment from '../../../Types/Comment';
+import CommentType from '../../../Types/CommentType';
 
 interface Props {
-  items: Comment[];
+  items: CommentType[];
 }
 
 const CommentsView: React.FC<Props> = ({ items }) => {
@@ -12,7 +12,7 @@ const CommentsView: React.FC<Props> = ({ items }) => {
     <ul className="comments-list">
       {items.map((item) => (
         <li className="comments-list-item" key={item.id}>
-          <strong>{item.author}</strong> ({item.date}): {item.text}
+          <strong>{item.author.username}</strong> ({item.date}): {item.text}
         </li>
       ))}
     </ul>

@@ -1,32 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, TextField, Typography, IconButton, List, ListItem, Paper } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import Comment from '../../Types/Comment';
+import axios from 'axios';
+import CommentType from '../../Types/CommentType';
 import { User } from '../../App';
 import colors from '../../colors';
 
 interface Props {
-  items?: Comment[];
+  items?: CommentType[];
   user: User | null;
+  postId: string;
+  onCommentsChange: (comments: CommentType[]) => void;
 }
 
-const Comments: React.FC<Props> = ({ items = [], user }) => {
-  const [comments, setComments] = useState<Comment[]>(items);
+const Comments: React.FC<Props> = ({ items = [], user, postId, onCommentsChange }) => {
+  const [comments, setComments] = useState<CommentType[]>(items);
   const [newCommentInput, setNewCommentInput] = useState('');
 
-  const handleAddComment = () => {
+  useEffect(() => {
+    setComments(items);
+  }, [items]);
+
+  const handleAddComment = async () => {
     if (!newCommentInput.trim() || !user) return;
 
-    setComments(prev => [
-      ...prev,
-      {
-        id: Date.now(),
+    try {
+      const res = await axios.post('http://localhost:1234/api/comments', {
+        postId,
+        authorUid: user.id,     
         text: newCommentInput.trim(),
-        author: user.username,
-        date: new Date().toLocaleString(),
-      },
-    ]);
-    setNewCommentInput('');
+      });
+
+      const updatedComments = [...comments, res.data];
+      setComments(updatedComments);
+      onCommentsChange(updatedComments);
+      setNewCommentInput('');
+    } catch {
+      alert('Failed to add comment');
+    }
   };
 
   return (
@@ -112,7 +123,7 @@ const Comments: React.FC<Props> = ({ items = [], user }) => {
             }}
           >
             <Typography component="span" variant="subtitle2" sx={{ fontWeight: 'bold', mr: 1 }}>
-              {author}
+              {author.username}
             </Typography>
             <Typography
               component="span"

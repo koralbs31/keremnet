@@ -16,22 +16,21 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ user }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchUserPosts = async () => {
     if (!user) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await axios.get<PostType[]>(`${ROUTES.posts}/user/${user.username}`);
+      setPosts(res.data);
+    } catch (err) {
+      setError("Failed to load posts.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const fetchUserPosts = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const res = await axios.get<PostType[]>(`${ROUTES.posts}/user/${user.username}`);
-        setPosts(res.data);
-      } catch (err) {
-        setError("Failed to load posts.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
+  useEffect(() => {
     fetchUserPosts();
   }, [user]);
 
@@ -54,7 +53,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ user }) => {
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <PostView posts={posts} user={user} Loading={loading} />
+        <PostView 
+          posts={posts} 
+          user={user} 
+          loading={loading} 
+          refreshPosts={fetchUserPosts} 
+        />
       </div>
     </div>
   );
