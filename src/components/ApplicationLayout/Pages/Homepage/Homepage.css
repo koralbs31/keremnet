@@ -1,0 +1,49 @@
+:root {
+  --primary-color: #a2aadb;
+  --secondary-color: #fff2e0;
+  --light-color: #c0c9ee;
+  --dark-color: #898ac4;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: var(--light-color);
+}
+
+.not-logged-in{
+    color: white;
+    text-align: center;
+    font-size: 3em;
+}
+
+.homepage {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  background-color: var(--light-color);
+  overflow-y: auto;
+}
+
+.homepage-header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 2rem 1rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.homepage-title {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.homepage-subtitle {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  opacity: 0.95;
+}

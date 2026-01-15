@@ -1,0 +1,90 @@
+:root {
+  --primary-color: #000000;
+  --secondary-color: #282828;
+  --light-color: #230046;
+  --dark-color: #320064;
+
+  --comment-background: #73B9EE;
+  --comment-title: #ffffff;
+  --comment-button-bg: #ffffff;
+  --comment-button-color: #320064;
+  --comment-button-hover-bg: grey;
+
+  --homepage-primary: #a2aadb;
+  --homepage-secondary: #fff2e0;
+  --homepage-light: #c0c9ee;
+  --homepage-dark: #898ac4;
+
+  --comments-list-item-border: #e5e7eb;
+  --comments-list-item-text: #333;
+}
+
+.comments-container {
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  background-color: var(--comment-background);
+  margin-top: 1.5rem;
+}
+
+.comments-title {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--comment-title);
+}
+
+.comments-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.comments-post-btn {
+  align-self: flex-start;
+  text-transform: none;
+}
+
+.comments-list-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--comments-list-item-border);
+  color: var(--comments-list-item-text);
+  font-size: 1rem;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: var(--homepage-light);
+}
+
+.homepage {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  background-color: var(--homepage-light);
+  overflow-y: auto;
+}
+
+.homepage-header {
+  background-color: var(--homepage-primary);
+  color: white;
+  padding: 2rem 1rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.homepage-title {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.homepage-subtitle {
+  margin-top: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  opacity: 0.95;
+}

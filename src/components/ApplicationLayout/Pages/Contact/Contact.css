@@ -1,0 +1,41 @@
+:root {
+  --primary-color: #A2AADB;
+  --secondary-color: #FFF2E0;
+  --light-color: #C0C9EE;
+  --dark-color: #898AC4;
+}
+
+.contact-page-wrapper {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: var(--light-color);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+.contact-page {
+  max-width: 900px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  color: #333;
+}
+
+.contact-info {
+  background: #f9fafb;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.contact-about {
+  margin-top: 20px;
+}
+
+.contact-form {
+  padding: 30px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: white;
+}
